@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+final ValueNotifier<int> cartCount = ValueNotifier<int>(0);
+final List<Product> cartItems = [];
+
 void main() {
   runApp(const MyApp());
 }
@@ -80,6 +83,50 @@ class ProductListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Mini Katalog"),
+        actions: [
+          ValueListenableBuilder<int>(
+            valueListenable: cartCount,
+            builder: (context, value, _) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const CartPage()),
+                        );
+                      },
+                      child: const Icon(Icons.shopping_cart, size: 28),
+                    ),
+                    if (value > 0)
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            value.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(10),
@@ -201,7 +248,17 @@ class ProductDetailPage extends StatelessWidget {
                   backgroundColor: Colors.orange,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  cartItems.add(product);
+                  cartCount.value = cartItems.length;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Ürün sepete eklendi"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
                 child: const Text(
                   "Sepete Ekle",
                   style: TextStyle(fontSize: 16),
@@ -209,6 +266,63 @@ class ProductDetailPage extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Cart"),
+      ),
+      body: cartItems.isEmpty
+          ? const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.shopping_cart_outlined, size: 60, color: Colors.grey),
+                  SizedBox(height: 10),
+                  Text("Your cart is empty"),
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
+                final item = cartItems[index];
+                return ListTile(
+                  leading: Image.network(item.image, width: 50, fit: BoxFit.cover),
+                  title: Text(item.name),
+                  subtitle: Text("\$${item.price}"),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.remove_circle_outline),
+                    onPressed: () {
+                      setState(() {
+                        cartItems.removeAt(index);
+                        cartCount.value = cartItems.length;
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+          child: const Text("Checkout"),
         ),
       ),
     );
