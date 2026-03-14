@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "AirPods Max",
+    "subTitle": "Silver",
+    "description": "Yüksek sadakatli ses deneyimi ve aktif gürültü engelleme.",
+    "price": 549.0,
+    "imageUrl": "assets/images/airpodsmax.png",
+    "category": "Audio"
+  },
+  {
+    "id": 2,
+    "name": "Apple Watch Ultra",
+    "subTitle": "Titanium",
+    "description": "En yetenekli ve dayanıklı Apple Watch.",
+    "price": 799.0,
+    "imageUrl": "assets/images/applewatchultra.png",
+    "category": "Watch"
+  },
+  {
+    "id": 3,
+    "name": "iPhone 15 Pro",
+    "subTitle": "Titanium",
+    "description": "A17 Pro çip ve titanyum tasarım.",
+    "price": 999.0,
+    "imageUrl": "assets/images/iphone15pro.png",
+    "category": "Phone"
+  },
+  {
+    "id": 4,
+    "name": "MacBook Air M3",
+    "subTitle": "Midnight",
+    "description": "Dünyanın en popüler dizüstü bilgisayarı.",
+    "price": 1099.0,
+    "imageUrl": "assets/images/macbookairm3.png",
+    "category": "Laptop"
+  },
+  {
+    "id": 5,
+    "name": "HomePod Mini",
+    "subTitle": "Orange",
+    "description": "Küçük boyutta devasa ses kalitesi.",
+    "price": 99.0,
+    "imageUrl": "assets/images/homepodmini.png",
+    "category": "Audio"
+  },
+  {
+    "id": 6,
+    "name": "Galaxy S24 Ultra",
+    "subTitle": "Gray",
+    "description": "Galaxy AI ile yapay zeka deneyimi.",
+    "price": 1299.0,
+    "imageUrl": "assets/images/galaxys24ultra.png",
+    "category": "Phone"
+  }
+]
